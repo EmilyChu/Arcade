@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150315200532) do
+ActiveRecord::Schema.define(version: 20150316211202) do
 
   create_table "tic_tac_toes", force: :cascade do |t|
-    t.integer  "player_x"
-    t.integer  "player_o"
     t.string   "board"
     t.boolean  "wins"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.text     "players"
+    t.integer  "current_player"
   end
 
   create_table "users", force: :cascade do |t|

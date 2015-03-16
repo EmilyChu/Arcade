@@ -1,6 +1,7 @@
 class TicTacToe < ActiveRecord::Base
 
   serialize :board, JSON
+  serialize :players, JSON
 
   def self.start_game
     t = TicTacToe.new
@@ -51,8 +52,8 @@ class TicTacToe < ActiveRecord::Base
 
   def self.new_game p1, p2
     t = start_game
-    t.update(player_x: p1, player_o: p2)
-    # t.current_player = ...
+    t.players = [p1, p2]
+    t.current_player = 0
     t.save!
     t
   end
@@ -61,12 +62,27 @@ class TicTacToe < ActiveRecord::Base
     TicTacToe.find(id)
   end
 
-  def current_player
-    User.find player_id
-  end
-
   def player_turn? p
     p == players[current_player]
   end
+
+  def current_symbol
+    current_player.zero? ? :x : :o
+  end
+
+  def toggle_player
+    if current_player.zero?
+      update current_player: 1
+    else
+      update current_player: 0
+    end
+  end
+
+  def record_move location
+    mark current_symbol, location
+    toggle_player
+    save!
+  end
+
 
 end
