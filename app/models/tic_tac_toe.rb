@@ -84,5 +84,8 @@ class TicTacToe < ActiveRecord::Base
     save!
   end
 
+  def board_rows
+    self.board.in_groups_of 3
+  end
 
 end

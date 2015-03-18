@@ -1,0 +1,22 @@
+- if @game.winner
+  p Game over. #{@game.winner} won.
+- elsif @can_play
+  p It's YOUR turn
+- else
+  p It's #{@game.current_symbol}'s turn.
+
+button.js-click.btn.btn-primary Click me!
+
+table.table
+  - i = 0
+  - @game.board_rows.each do |row|
+    tr
+      - row.each do |cell|
+        td
+          - i += 1
+          - if cell == "-" && @can_play
+            = form_tag @game, method: :patch
+              input type="hidden" name="move" value=i
+              button.btn.btn-default *
+          - else
+            = cell

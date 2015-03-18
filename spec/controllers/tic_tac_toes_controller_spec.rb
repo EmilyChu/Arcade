@@ -6,8 +6,9 @@ describe TicTacToesController do
   it "can display the saved game page" do
     u1 = FactoryGirl.create :user
     u2 = FactoryGirl.create :user
-    g = TicTacToe.start_game
+    g = TicTacToe.new_game u1.id, u2.id
 
+    login u1
     get :show, id: g.id
 
     expect(response.code.to_i).to eq 200
